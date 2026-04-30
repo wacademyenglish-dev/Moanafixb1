@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WOLFLIX Masterclass: Moana Live Action</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        island: {
+                            sand: '#fef08a',       
+                            sandDark: '#ca8a04',   
+                            water: '#06b6d4',      
+                            wood: '#78350f',       
+                            text: '#451a03'        
+                        },
+                        ocean: {
+                            deep: '#0f172a',       
+                            water: '#0284c7',      
+                            text: '#f8fafc',       
+                            magic: '#34d399',      
+                            star: '#e0f2fe'        
+                        }
+                    },
+                    fontFamily: {
+                        tribal: ['"Baloo 2"', 'cursive'],
+                        base: ['Nunito', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* ==================================================================
+           DYNAMIC THEME ENGINE: MOTUNUI (ISLAND) vs OPEN OCEAN
+           ================================================================== */
+        
+        :root {
+            /* Theme 1: Serene Tropical Ocean */
+            --bg-top: #38bdf8;     /* sky-400 - Serene ocean blue */
+            --bg-bot: #0369a1;     /* sky-700 - Deep tropical blue */
+            --panel-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #082f49;
+            --text-muted: #0369a1;
+            --accent: #0284c7;
+            --accent-glow: rgba(2, 132, 199, 0.4);
+            --border-color: #7dd3fc;
+            --card-shadow: 0 10px 25px rgba(2, 132, 199, 0.2);
+            --btn-text: #ffffff;
+            --bg-pattern: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2.5L22.5 16 25 13.5V0h2v13.5L29.5 16l2.5-2.5V20h8v2h-8v2.5L29.5 27 27 29.5V40h-2V29.5L22.5 27 20 24.5V22H0v-2h20v.5z' fill='%23ffffff' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        body.theme-ocean {
+            /* Theme 2: Open Ocean (Dark, Starry, Deep) */
+            --bg-top: #0f172a;
+            --bg-bot: #1e3a8a;
+            --panel-bg: rgba(15, 23, 42, 0.85); 
+            --text-main: #f8fafc;
+            --text-muted: #bae6fd;
+            --accent: #34d399; /* Te Fiti Green */
+            --accent-glow: rgba(52, 211, 153, 0.5);
+            --border-color: #0284c7;
+            --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            --btn-text: #0f172a;
+            --bg-pattern: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23e0f2fe' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        body {
+            background-color: var(--bg-bot);
+            background-image: var(--bg-pattern), linear-gradient(135deg, var(--bg-top), var(--bg-bot));
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: var(--font-base);
+            transition: background 1s ease-in-out;
+            overflow: hidden;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* --- Ambient Wave Bottom Fillers --- */
+        .ocean-waves-2 {
+            position: fixed; bottom: 64px; left: 0; width: 100%; height: 35vh;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.15' d='M0,224L60,202.7C120,181,240,139,360,138.7C480,139,600,181,720,202.7C840,224,960,224,1080,208C1200,192,1320,160,1380,144L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover; background-repeat: no-repeat; background-position: bottom center;
+            z-index: 0; pointer-events: none; transition: opacity 1s;
+        }
+        .ocean-waves {
+            position: fixed; bottom: 64px; left: 0; width: 100%; height: 25vh;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.3' d='M0,160L60,170.7C120,181,240,203,360,192C480,181,600,139,720,133.3C840,128,960,160,1080,170.7C1200,181,1320,171,1380,165.3L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover; background-repeat: no-repeat; background-position: bottom center;
+            z-index: 1; pointer-events: none; transition: opacity 1s;
+        }
+        body.theme-ocean .ocean-waves, body.theme-ocean .ocean-waves-2 { opacity: 0.05; }
+
+        h1, h2, h3, .font-tribal { font-family: 'Baloo 2', cursive; letter-spacing: 1px; }
+
+        /* Component Styles */
+        .moana-panel {
+            background: var(--panel-bg); backdrop-filter: blur(12px);
+            border: 2px solid var(--border-color); box-shadow: var(--card-shadow);
+            border-radius: 1.25rem; transition: all 0.3s ease;
+        }
+
+        .moana-btn {
+            background-color: var(--accent); color: var(--btn-text);
+            font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            box-shadow: 0 4px 10px var(--accent-glow); transition: all 0.2s ease;
+            border-radius: 0.75rem; border: 2px solid transparent;
+        }
+        .moana-btn:hover { transform: scale(1.03); box-shadow: 0 6px 15px var(--accent-glow); filter: brightness(1.1); }
+        .moana-btn:active { transform: scale(0.98); box-shadow: 0 2px 5px var(--accent-glow); }
+        
+        .moana-btn-outline {
+            background-color: transparent; color: var(--text-main); border: 2px solid var(--accent);
+        }
+        .moana-btn-outline:hover { background-color: var(--accent); color: var(--btn-text); }
+
+        .text-accent { color: var(--accent); transition: color 0.5s ease; }
+        .border-accent { border-color: var(--accent); transition: border-color 0.5s ease; }
+
+        /* --- Scroll & Fullscreen Fixes (Compact & Responsive) --- */
+        .slide {
+            display: none; 
+            width: 100%; 
+            height: 100%;
+            overflow-y: auto; 
+            position: relative; 
+            z-index: 10;
+            padding: 1.5rem; /* Safe padding from edges */
+        }
+        .slide.active { 
+            display: flex; 
+            flex-direction: column; 
+            animation: fadeMoana 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+        }
+        .page-content { 
+            margin: auto; /* Magic flex centering: centers vertically when short, aligns to top when tall */
+            width: 100%; max-width: 950px; 
+            display: flex; flex-direction: column; align-items: center; 
+            text-align: center; 
+        }
+
+        @keyframes fadeMoana {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Custom Interactive Elements & Follow-up Box */
+        .interactive-card { cursor: pointer; transition: all 0.2s ease; }
+        .interactive-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 8px 20px var(--accent-glow); }
+        .reveal-content { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.4s ease; }
+        .interactive-card.open .reveal-content { max-height: 400px; opacity: 1; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 2px dashed var(--border-color); }
+
+        .follow-up-box {
+            background: linear-gradient(90deg, rgba(2, 132, 199, 0.1) 0%, transparent 100%);
+            border-left: 4px solid var(--accent);
+            padding: 0.75rem 1rem; border-radius: 0 0.5rem 0.5rem 0;
+            margin-top: 1rem;
+        }
+        body.theme-ocean .follow-up-box {
+            background: linear-gradient(90deg, rgba(52, 211, 153, 0.1) 0%, transparent 100%);
+        }
+
+        /* Thematic Speaking Starter */
+        .speaking-starter {
+            background: linear-gradient(90deg, var(--accent-glow) 0%, transparent 100%);
+            border-left: 6px solid var(--accent); border-radius: 0 1rem 1rem 0;
+            padding: 1rem 1.5rem; margin-top: 1rem; position: relative; overflow: hidden; text-align: left;
+        }
+        .speaking-starter::before {
+            content: '🌊'; position: absolute; right: 10px; bottom: -15px;
+            font-size: 4rem; opacity: 0.15; pointer-events: none;
+        }
+
+        /* Tapa Cloth Vocabulary Pattern */
+        .tapa-cloth {
+            background-color: #d97706;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2.5L22.5 16 25 13.5V0h2v13.5L29.5 16l2.5-2.5V20h8v2h-8v2.5L29.5 27 27 29.5V40h-2V29.5L22.5 27 20 24.5V22H0v-2h20v.5z' fill='%2378350f' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+            border: 6px solid #78350f; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        /* The Heart of Te Fiti */
+        .te-fiti-stone {
+            width: 100px; height: 100px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #a7f3d0, #10b981, #064e3b);
+            box-shadow: 0 0 30px #34d399, inset 0 0 15px #a7f3d0;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; animation: pulseStone 3s infinite alternate;
+        }
+        .te-fiti-stone:hover { transform: scale(1.1); box-shadow: 0 0 50px #6ee7b7, inset 0 0 25px #d1fae5; }
+        .te-fiti-stone::after { content: '🌀'; font-size: 3.5rem; opacity: 0.5; mix-blend-mode: overlay; }
+        @keyframes pulseStone { 0% { filter: brightness(1); } 100% { filter: brightness(1.3); } }
+
+        /* --- THE OCEAN WAVE TRANSITION --- */
+        #ocean-wave {
+            position: fixed; bottom: 0; left: 0; width: 100vw; height: 0vh;
+            background: linear-gradient(to top, #0ea5e9 0%, #38bdf8 80%, rgba(255,255,255,0.8) 100%);
+            z-index: 9999; pointer-events: none; transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top-left-radius: 50% 20px; border-top-right-radius: 50% 20px;
+        }
+        .wave-crash { height: 100vh !important; border-radius: 0 !important; }
+
+        /* Praise Pop-up Animation */
+        @keyframes popUpPraise {
+            0% { transform: translate(-50%, -50%) scale(0.2) rotate(-5deg); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.1) rotate(2deg); opacity: 1; filter: drop-shadow(0 0 15px var(--accent)); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 8px var(--accent)); }
+        }
+        .praise-anim { animation: popUpPraise 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+    </style>
+</head>
+<body class="selection:bg-[var(--accent)] selection:text-[var(--btn-text)] theme-island">
+
+    <!-- AMBIENT WAVES -->
+    <div class="ocean-waves-2"></div>
+    <div class="ocean-waves"></div>
+
+    <!-- OCEAN WAVE TRANSITION DIV -->
+    <div id="ocean-wave"></div>
+
+    <!-- GIANT PRAISE POPUP -->
+    <div id="praise-popup" class="fixed top-1/2 left-1/2 hidden text-accent font-black text-4xl md:text-6xl text-center z-[10000] drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] uppercase tracking-tighter w-full pointer-events-none transform -translate-x-1/2 -translate-y-1/2 font-tribal">
+        <span id="praise-text" class="bg-[var(--panel-bg)] px-6 py-3 border-4 border-accent rounded-2xl inline-block shadow-xl"></span>
+    </div>
+
+    <!-- TOP BAR -->
+    <header class="fixed top-0 left-0 w-full h-16 moana-panel rounded-none border-t-0 border-l-0 border-r-0 border-b-2 z-40 flex items-center justify-between px-4 md:px-6 transition-colors duration-1000">
+        <div class="flex items-center gap-2 md:gap-4">
+            <span class="text-2xl drop-shadow-md">🌊</span>
+            <h1 class="font-tribal font-black tracking-widest text-lg text-[var(--text-main)] uppercase hidden md:block">Teacher's Guide</h1>
+            <span class="border-2 border-accent text-accent font-bold text-[10px] md:text-xs px-2 md:px-3 py-1 rounded-full tracking-widest md:ml-2">LEVEL: A2/B1</span>
+        </div>
+        <div class="flex items-center gap-3 md:gap-4">
+            <!-- Praise System -->
+            <div class="flex items-center gap-2 bg-[var(--text-main)]/5 border border-[var(--border-color)] rounded-xl px-2 py-1 shadow-inner mr-1 md:mr-2">
+                <span class="hidden lg:inline text-[10px] opacity-70 font-bold mr-1 uppercase tracking-widest">Praise:</span>
+                <button onclick="triggerPraise('WAYFINDER! ⛵')" class="text-lg hover:scale-125 transition-transform drop-shadow-md" title="Wayfinder!">⛵</button>
+                <button onclick="triggerPraise('MASTER NAVIGATOR! 🌊')" class="text-lg hover:scale-125 transition-transform drop-shadow-md" title="Master Navigator!">🌊</button>
+                <button onclick="triggerPraise('THE OCEAN CHOSE YOU! 🐚')" class="text-lg hover:scale-125 transition-transform drop-shadow-md" title="The Ocean Chose You!">🐚</button>
+            </div>
+
+            <button onclick="toggleFullscreen()" class="font-base text-[10px] md:text-xs font-bold moana-btn-outline px-3 py-1.5 uppercase tracking-widest rounded-lg hidden sm:block">
+                FULLSCREEN
+            </button>
+            <button onclick="toggleNotepad()" class="font-base text-[10px] md:text-xs font-bold moana-btn px-4 py-1.5 uppercase tracking-widest shadow-md">
+                Notes
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN APP WRAPPER -->
+    <main class="pt-16 pb-16 w-full flex-1 relative flex flex-col z-10 overflow-hidden">
+        
+        <!-- ========================================== -->
+        <!-- ACT I: MOTUNUI (THE IDENTITY)              -->
+        <!-- ========================================== -->
+
+        <!-- PAGE 1: COVER -->
+        <section class="slide active">
+            <div class="page-content">
+                <div class="w-full max-w-xs moana-panel p-2 mb-6 shadow-xl rounded-2xl relative border-4 border-[var(--border-color)] transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+                    <img src="https://static0.moviewebimages.com/wordpress/wp-content/uploads/sharedimages/2026/03/8kpmnbbb8rp1wg99thlcz9jauqo.jpg?q=70&fit=contain&w=480&dpr=1" alt="Moana Cover" class="w-full h-auto object-cover rounded-xl">
+                </div>
+                <span class="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-muted mb-3 border-2 border-[var(--border-color)] px-3 py-1 rounded-full bg-[var(--panel-bg)]">WOLFLIX Masterclass</span>
+                <h1 class="text-5xl md:text-7xl font-tribal font-black mb-1 text-accent drop-shadow-lg uppercase tracking-widest">Moana</h1>
+                <h2 class="text-lg md:text-2xl font-bold font-tribal text-main mb-6 uppercase tracking-widest opacity-80">The Calling</h2>
+                
+                <div class="moana-panel p-6 mb-8 max-w-2xl border-b-4 border-accent">
+                    <p class="text-lg md:text-xl font-bold italic opacity-90">
+                        "The ocean is calling you. Do you know who you are?"
+                    </p>
+                </div>
+                
+                <button onclick="nextSlide()" class="moana-btn px-8 py-3 text-lg flex items-center gap-2">
+                    Enter the Village <span>🌴</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- PAGE 2: WELCOME DIRECTIVE -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs text-accent">Directive 01</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black">Welcome, Guide</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl w-full text-lg leading-relaxed">
+                    <p class="mb-4 font-bold text-xl border-b-2 border-[var(--border-color)] pb-3">This class is about heritage, destiny, and the future.</p>
+                    <p class="mb-4 opacity-90">Your Pre-Intermediate (A2/B1) student will explore the deep connection with nature and the courage to leave their comfort zone.</p>
+                    <div class="bg-[var(--bg-bot)]/10 p-4 rounded-xl border border-[var(--border-color)] mt-4">
+                        <h3 class="font-tribal uppercase text-base mb-2 accent-text tracking-widest font-black">Grammar Targets:</h3>
+                        <ul class="list-none pl-2 font-bold text-base space-y-2 opacity-90">
+                            <li class="flex items-center gap-2"><span class="text-xl">🐚</span> <strong>Gerunds as Subjects:</strong> (Ex: "Navigating is our history").</li>
+                            <li class="flex items-center gap-2"><span class="text-xl">✨</span> <strong>First Conditional:</strong> (Ex: "If I find the heart, I will save my people").</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: WARM UP 1 (ANCESTRY) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs text-accent">Warm-Up Phase</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black">Your Origins</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl w-full text-center">
+                    <span class="text-6xl mb-4 block drop-shadow-md">🛖</span>
+                    <p class="text-xl md:text-2xl font-bold mb-6 leading-relaxed opacity-90">
+                        "Where are your ancestors from? Did they travel far to live where you are now?"
+                    </p>
+                    
+                    <div class="speaking-starter mx-auto max-w-xl">
+                        <p class="font-bold text-accent font-tribal text-lg mb-1 tracking-widest">🗣️ Wayfinder Starter:</p>
+                        <p class="italic text-lg font-medium">"My ancestors originally came from... and I feel connected to..."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: WARM UP 2 (NATURE) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs text-accent">Warm-Up Phase</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black">The Elements</h1>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl w-full mb-6">
+                    <div class="moana-panel p-6 text-center hover:scale-105 transition-transform cursor-pointer border-t-4 border-green-600">
+                        <span class="text-5xl mb-3 block">⛰️</span>
+                        <h3 class="text-2xl font-tribal font-black mb-2">Mountain Person</h3>
+                        <p class="text-base opacity-80 font-bold">You prefer the stability of the land, the forests, and the heights.</p>
+                    </div>
+                    <div class="moana-panel p-6 text-center hover:scale-105 transition-transform cursor-pointer border-t-4 border-blue-500">
+                        <span class="text-5xl mb-3 block">🌊</span>
+                        <h3 class="text-2xl font-tribal font-black mb-2">Ocean Person</h3>
+                        <p class="text-base opacity-80 font-bold">You prefer the sound of the waves, the beach, and the unknown.</p>
+                    </div>
+                </div>
+
+                <div class="moana-panel p-6 max-w-3xl w-full text-center">
+                    <p class="text-xl font-bold opacity-90 mb-4">"Which one are you? Why?"</p>
+                    <div class="speaking-starter mx-auto max-w-xl">
+                        <p class="font-bold text-accent font-tribal text-lg mb-1 tracking-widest">🗣️ Wayfinder Starter:</p>
+                        <p class="italic text-lg font-medium">"I am definitely an Ocean/Mountain person because..."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 5: THE WAYFINDER'S KIT (LEXICON 1) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs text-white drop-shadow-md">The Wayfinder's Kit</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black text-white drop-shadow-md">Oceanic Vocabulary</h1>
+                <p class="text-center text-base mb-6 font-bold text-white drop-shadow-md">Click the symbols on the Tapa cloth to learn the nouns.</p>
+                
+                <div class="tapa-cloth p-6 md:p-8 rounded-2xl max-w-4xl w-full">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="moana-panel p-4 md:p-6 text-center interactive-card" onclick="this.classList.toggle('open')">
+                            <h3 class="font-tribal font-black text-xl uppercase tracking-widest mb-1">Ancestor</h3>
+                            <div class="reveal-content text-left">
+                                <p class="text-base mb-2 font-bold opacity-90">A person in your family from the past.</p>
+                                <p class="text-sm italic opacity-80 border-l-2 border-accent pl-2 mb-2">"Our ancestors were voyagers."</p>
+                                <div class="follow-up-box">
+                                    <p class="font-bold text-accent text-xs uppercase tracking-widest mb-1">🗣️ Discussion Prompt:</p>
+                                    <p class="font-medium text-xs">Do you know any interesting stories about your ancestors?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="moana-panel p-4 md:p-6 text-center interactive-card" onclick="this.classList.toggle('open')">
+                            <h3 class="font-tribal font-black text-xl uppercase tracking-widest mb-1">Reef</h3>
+                            <div class="reveal-content text-left">
+                                <p class="text-base mb-2 font-bold opacity-90">A line of rocks or coral in the ocean.</p>
+                                <p class="text-sm italic opacity-80 border-l-2 border-accent pl-2 mb-2">"No one goes beyond the reef."</p>
+                                <div class="follow-up-box">
+                                    <p class="font-bold text-accent text-xs uppercase tracking-widest mb-1">🗣️ Discussion Prompt:</p>
+                                    <p class="font-medium text-xs">What is a "reef" or barrier holding you back in your life right now?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="moana-panel p-4 md:p-6 text-center interactive-card" onclick="this.classList.toggle('open')">
+                            <h3 class="font-tribal font-black text-xl uppercase tracking-widest mb-1">Horizon</h3>
+                            <div class="reveal-content text-left">
+                                <p class="text-base mb-2 font-bold opacity-90">The line where the earth/sea meets the sky.</p>
+                                <p class="text-sm italic opacity-80 border-l-2 border-accent pl-2 mb-2">"See the line where the sky meets the sea?"</p>
+                                <div class="follow-up-box">
+                                    <p class="font-bold text-accent text-xs uppercase tracking-widest mb-1">🗣️ Discussion Prompt:</p>
+                                    <p class="font-medium text-xs">What goals are currently on your horizon?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="moana-panel p-4 md:p-6 text-center interactive-card" onclick="this.classList.toggle('open')">
+                            <h3 class="font-tribal font-black text-xl uppercase tracking-widest mb-1">Voyage</h3>
+                            <div class="reveal-content text-left">
+                                <p class="text-base mb-2 font-bold opacity-90">A long journey involving travel by sea.</p>
+                                <p class="text-sm italic opacity-80 border-l-2 border-accent pl-2 mb-2">"We are preparing for a long voyage."</p>
+                                <div class="follow-up-box">
+                                    <p class="font-bold text-accent text-xs uppercase tracking-widest mb-1">🗣️ Discussion Prompt:</p>
+                                    <p class="font-medium text-xs">If you could take a one-year voyage anywhere, where would you go?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 6: THE DANGERS BEYOND (LEXICON 2) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text">Threat Assessment</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black">The Dangers Beyond</h1>
+                <p class="text-center text-base mb-6 font-bold opacity-90 max-w-2xl">Wayfinders must know their enemies. Click the cards to learn these mythical threats.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl w-full">
+                    <div class="moana-panel p-4 md:p-6 text-center interactive-card border-t-4 border-orange-800" onclick="this.classList.toggle('open')">
+                        <span class="text-5xl mb-3 block">🥥</span>
+                        <h3 class="font-tribal font-black text-xl uppercase tracking-widest mb-1">Kakamora</h3>
+                        <p class="text-sm font-bold opacity-90 border-b border-[var(--border-color)] pb-2 mb-2">Coconut Pirates</p>
+                        <div class="reveal-content text-left">
+                            <p class="text-xs italic opacity-80 mb-2">"They are cute, but they will steal everything on your boat."</p>
+                            <div class="follow-up-box mt-2 py-2">
+                                <p class="font-bold text-accent text-[10px] uppercase tracking-widest mb-1">🗣️ Prompt:</p>
+                                <p class="font-medium text-xs">Have you ever underestimated something that looked harmless?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moana-panel p-4 md:p-6 text-center interactive-card border-t-4 border-red-600" onclick="this.classList.toggle('open')">
+                        <span class="text-5xl mb-3 block">🌋</span>
+                        <h3 class="font-tribal font-black text-xl uppercase tracking-widest mb-1">Lava Demon</h3>
+                        <p class="text-sm font-bold opacity-90 border-b border-[var(--border-color)] pb-2 mb-2">Te Kā</p>
+                        <div class="reveal-content text-left">
+                            <p class="text-xs italic opacity-80 mb-2">"A monster of fire and earth that protects the ocean barriers."</p>
+                            <div class="follow-up-box mt-2 py-2">
+                                <p class="font-bold text-accent text-[10px] uppercase tracking-widest mb-1">🗣️ Prompt:</p>
+                                <p class="font-medium text-xs">What is your biggest "demon" (fear or obstacle) right now?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moana-panel p-4 md:p-6 text-center interactive-card border-t-4 border-purple-800" onclick="this.classList.toggle('open')">
+                        <span class="text-5xl mb-3 block">🦀</span>
+                        <h3 class="font-tribal font-black text-xl uppercase tracking-widest mb-1">Lalotai</h3>
+                        <p class="text-sm font-bold opacity-90 border-b border-[var(--border-color)] pb-2 mb-2">Realm of Monsters</p>
+                        <div class="reveal-content text-left">
+                            <p class="text-xs italic opacity-80 mb-2">"A dark underwater world where giant crabs and spirits live."</p>
+                            <div class="follow-up-box mt-2 py-2">
+                                <p class="font-bold text-accent text-[10px] uppercase tracking-widest mb-1">🗣️ Prompt:</p>
+                                <p class="font-medium text-xs">Would you rather explore deep space or the deep ocean?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- ACT II: THE ANCESTRAL CALL (Grammar 1)     -->
+        <!-- ========================================== -->
+
+        <!-- PAGE 7: GRAMMAR 1 -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text">Grammar Focus</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black">Gerunds as Subjects</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl w-full text-center">
+                    <p class="text-lg md:text-xl font-bold mb-4 opacity-90">When we want to talk about an action as a concept or duty, we add <strong class="accent-text text-2xl">-ING</strong> to the verb and put it at the beginning of the sentence.</p>
+                    
+                    <div class="bg-[var(--bg-top)]/30 p-4 rounded-xl border border-[var(--border-color)] inline-block mt-2 text-left">
+                        <p class="text-lg md:text-xl font-bold mb-3">"<span class="accent-text underline">Navigat<strong>ing</strong></span> is in our blood."</p>
+                        <p class="text-lg md:text-xl font-bold">"<span class="accent-text underline">Protect<strong>ing</strong></span> the island is my duty."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 8: CULTURAL REVIEW (GRAMMAR DRILL) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text">Interactive Challenge</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black">The Voyagers</h1>
+                <p class="text-center text-lg mb-6 opacity-80 font-bold max-w-2xl">Complete the sentences about the ancient ships using Gerunds.</p>
+
+                <div class="space-y-4 max-w-3xl w-full text-lg md:text-xl font-bold">
+                    <div class="moana-panel p-4 md:p-6 rounded-xl flex items-center justify-between cursor-pointer interactive-card" onclick="this.innerHTML = '<p><span class=\'accent-text underline px-2\'>Sailing</span> the ocean is dangerous.</p><div class=\'follow-up-box mt-3 text-left\'><p class=\'font-bold text-accent text-[10px] uppercase tracking-widest mb-1\'>🗣️ Discussion Prompt:</p><p class=\'font-medium text-sm text-[var(--text-main)]\'>What is the most dangerous thing you have ever done?</p></div>'">
+                        <p><span class="border-b-2 border-[var(--border-color)] px-6 mx-2 text-transparent">___</span> (sail) the ocean is dangerous.</p>
+                        <span class="text-xs opacity-50 uppercase tracking-widest">Click to reveal</span>
+                    </div>
+                    <div class="moana-panel p-4 md:p-6 rounded-xl flex items-center justify-between cursor-pointer interactive-card" onclick="this.innerHTML = '<p><span class=\'accent-text underline px-2\'>Finding</span> new islands is important.</p><div class=\'follow-up-box mt-3 text-left\'><p class=\'font-bold text-accent text-[10px] uppercase tracking-widest mb-1\'>🗣️ Discussion Prompt:</p><p class=\'font-medium text-sm text-[var(--text-main)]\'>If you found a new, undiscovered island, what would you name it?</p></div>'">
+                        <p><span class="border-b-2 border-[var(--border-color)] px-6 mx-2 text-transparent">___</span> (find) new islands is important.</p>
+                        <span class="text-xs opacity-50 uppercase tracking-widest">Click to reveal</span>
+                    </div>
+                    <div class="moana-panel p-4 md:p-6 rounded-xl flex items-center justify-between cursor-pointer interactive-card" onclick="this.innerHTML = '<p><span class=\'accent-text underline px-2\'>Leaving</span> the reef is forbidden.</p><div class=\'follow-up-box mt-3 text-left\'><p class=\'font-bold text-accent text-[10px] uppercase tracking-widest mb-1\'>🗣️ Discussion Prompt:</p><p class=\'font-medium text-sm text-[var(--text-main)]\'>Why do you think adults sometimes create strict rules for younger people?</p></div>'">
+                        <p><span class="border-b-2 border-[var(--border-color)] px-6 mx-2 text-transparent">___</span> (leave) the reef is forbidden.</p>
+                        <span class="text-xs opacity-50 uppercase tracking-widest">Click to reveal</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 9: SPEAKING GERUNDS -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text">Applied Grammar</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black">Personal Duties</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl w-full text-center">
+                    <p class="text-2xl md:text-3xl font-bold mb-4 opacity-90 font-tribal italic">
+                        "Protecting the island is my duty."
+                    </p>
+                    <p class="text-lg font-bold mb-6 opacity-80">
+                        Think about your own life, your family, or your job. What is your main duty?
+                    </p>
+                    
+                    <div class="speaking-starter mx-auto max-w-xl text-left">
+                        <p class="font-bold text-accent font-tribal text-lg mb-1 tracking-widest">🗣️ Wayfinder Starter:</p>
+                        <p class="italic text-lg font-medium">"For me, [ taking care of my family / studying hard ] is my main duty because..."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 10: VOCABULARY (THE DEMIGOD) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text">Dossier</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 font-black">The Demigod</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl w-full flex flex-col md:flex-row gap-6 items-center border-t-4 border-[var(--border-color)]">
+                    <div class="w-32 h-40 md:w-40 md:h-56 bg-slate-900 border-4 border-slate-700 rounded-2xl flex flex-col items-center justify-center shrink-0 shadow-lg relative overflow-hidden text-white text-center">
+                        <span class="text-5xl md:text-6xl mb-1 opacity-50">🦅</span>
+                        <p class="font-tribal text-xl md:text-2xl font-black">MAUI</p>
+                    </div>
+                    <div class="text-left md:text-left text-center">
+                        <p class="text-xs font-bold uppercase tracking-widest mb-3 opacity-60">Status: Missing / Legend</p>
+                        <p class="text-lg leading-relaxed mb-4 font-bold">
+                            He is a <strong class="accent-text">Shapeshifter</strong> (someone who can change their physical form into animals).
+                        </p>
+                        <p class="text-lg leading-relaxed font-bold">
+                            He was a <strong class="accent-text">Hero</strong> to all men, a <strong class="accent-text">Legendary</strong> warrior. But he stole the heart.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- ACT III: THE BIG WAVE (The Transition)     -->
+        <!-- ========================================== -->
+
+        <!-- PAGE 11: THE WARNING -->
+        <section class="slide text-center">
+            <div class="page-content">
+                <div class="max-w-3xl mx-auto flex flex-col items-center justify-center w-full">
+                    <span class="text-6xl md:text-7xl mb-6 block drop-shadow-md">🌑</span>
+                    <h2 class="font-base font-bold tracking-widest mb-3 uppercase text-xs text-red-600 animate-pulse">Emergency</h2>
+                    <h1 class="text-4xl md:text-6xl font-tribal uppercase mb-6 font-black">The Darkness</h1>
+                    <div class="moana-panel p-6 md:p-8 max-w-2xl text-xl leading-relaxed font-bold border-l-4 border-red-600 shadow-xl w-full">
+                        <p>"The darkness is spreading. There are no fish. The coconuts are black."</p>
+                        <p class="mt-3">"The reef is no longer safe. We must leave."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 12: THE OCEAN WAVE ACTIVATION (WOW MECHANIC) -->
+        <section class="slide">
+            <div class="page-content">
+                <div class="w-full max-w-3xl mx-auto flex flex-col items-center justify-center text-center">
+                    <h2 class="font-base font-bold tracking-widest mb-3 uppercase text-xs accent-text animate-pulse">Critical Action Required</h2>
+                    <h1 class="text-4xl md:text-6xl font-tribal uppercase mb-8 font-black">The Ocean is Calling</h1>
+                    
+                    <p class="text-xl font-bold mb-10 opacity-90 max-w-xl">
+                        "You must find Maui and restore the heart. It is time to go."
+                    </p>
+                    
+                    <button onclick="triggerWaveEvent()" class="moana-btn px-10 py-5 text-2xl md:text-3xl bg-blue-600 text-white shadow-[0_8px_0_#1e3a8a] active:shadow-none border-none w-full max-w-sm animate-bounce" id="wave-btn">
+                        CROSS THE REEF 🌊
+                    </button>
+                    <p class="text-xs font-bold opacity-60 uppercase tracking-widest mt-4">Student: Click to set sail.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- THEME SHIFTS TO DEEP OCEAN DARK HERE       -->
+        <!-- ========================================== -->
+
+        <!-- PAGE 13: SCREENING PREP (OCEAN MODE) -->
+        <section class="slide text-center">
+            <div class="page-content">
+                <div class="max-w-3xl mx-auto flex flex-col items-center w-full">
+                    <span class="text-6xl md:text-7xl mb-6 block drop-shadow-[0_0_15px_#38bdf8]">🛶</span>
+                    <h2 class="font-base font-bold tracking-widest mb-3 uppercase text-xs accent-text">Video Evidence</h2>
+                    <h1 class="text-4xl md:text-6xl font-tribal uppercase mb-6 font-black">Wayfinder Mode</h1>
+                    <div class="moana-panel p-6 md:p-8 max-w-2xl border-l-4 border-l-accent text-lg leading-relaxed text-left shadow-lg w-full">
+                        <p class="mb-3 font-bold">> Watch the official teaser trailer.</p>
+                        <p class="mb-3">> Listen for Moana's name and her mission.</p>
+                        <p class="mb-3">> Pay attention to the water. It is alive.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 14: THE SCREENING ROOM -->
+        <section class="slide h-full">
+            <div class="page-content w-full h-full">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Surveillance Feed</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 text-center font-black">Moana: Teaser</h1>
+                
+                <div class="w-full max-w-4xl mx-auto rounded-xl overflow-hidden border-2 border-[var(--border-color)] bg-black shadow-xl relative aspect-video shrink-0">
+                    <iframe class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/cpP-fCG8PU8?rel=0" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 15: COMPREHENSION CHECK -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Data Analysis</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 text-center font-black">Comprehension Check</h1>
+                
+                <div class="space-y-4 max-w-3xl mx-auto w-full">
+                    <div class="moana-panel p-6 rounded-xl border-l-4 border-[var(--border-color)] interactive-card" onclick="this.classList.toggle('open')">
+                        <p class="font-bold text-xl md:text-2xl">> Q: Who is calling Moana?</p>
+                        <div class="reveal-content accent-text font-bold text-lg md:text-xl mt-3">
+                            [ RESPONSE: Her ancestors and the Ocean itself. ]
+                            <div class="follow-up-box mt-3 text-left">
+                                <p class="font-bold text-accent text-[10px] uppercase tracking-widest mb-1">🗣️ Discussion Prompt:</p>
+                                <p class="font-medium text-sm text-[var(--text-main)]">Have you ever felt a strong connection to a specific element of nature (ocean, forest, mountains)?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moana-panel p-6 rounded-xl border-l-4 border-[var(--border-color)] interactive-card" onclick="this.classList.toggle('open')">
+                        <p class="font-bold text-xl md:text-2xl">> Q: What does Maui (Dwayne Johnson) do at the end of the video?</p>
+                        <div class="reveal-content accent-text font-bold text-lg md:text-xl mt-3">
+                            [ RESPONSE: He does a traditional war cry/dance and says "Chee hoo!" ]
+                            <div class="follow-up-box mt-3 text-left">
+                                <p class="font-bold text-accent text-[10px] uppercase tracking-widest mb-1">🗣️ Discussion Prompt:</p>
+                                <p class="font-medium text-sm text-[var(--text-main)]">In your culture, are there any traditional dances or chants used for celebration or preparation?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 16: TRAILER DISCUSSION -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Emotional Response</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 text-center font-black">Cinematic Magic</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl mx-auto w-full text-center">
+                    <span class="text-5xl mb-4 block">🎬 🎵</span>
+                    <p class="text-xl font-bold mb-6 leading-relaxed opacity-90">
+                        "The trailer mixes beautiful ocean visuals with powerful tribal music. Did the music or the images give you goosebumps?"
+                    </p>
+                    
+                    <div class="speaking-starter mx-auto max-w-xl text-left">
+                        <p class="font-bold text-accent font-tribal text-lg mb-1 tracking-widest">🗣️ Wayfinder Starter:</p>
+                        <p class="italic text-lg font-medium">"When I watched the water move, I felt... / The music sounded very..."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- ACT IV: THE MISSION (First Conditional)    -->
+        <!-- ========================================== -->
+
+        <!-- PAGE 17: GRAMMAR 2 - FIRST CONDITIONAL -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Grammar Module</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 text-center font-black">First Conditional</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl mx-auto w-full text-center">
+                    <p class="text-lg md:text-xl font-bold mb-4 opacity-90">We use the First Conditional to talk about future possibilities and real plans.</p>
+                    
+                    <div class="bg-black/20 p-6 rounded-xl border border-[var(--border-color)] inline-block mt-2">
+                        <p class="text-lg font-bold mb-3 border-b border-[var(--border-color)] pb-2 opacity-80">If + Present Simple, WILL + Verb</p>
+                        <p class="text-2xl md:text-3xl font-tribal text-white">"If I <span class="accent-text">find</span> Maui, I <span class="accent-text">will save</span> my people."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 18: THE PROPHECY (MINIGAME) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Interactive Challenge</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 text-center font-black">The Prophecy</h1>
+                <p class="text-center text-base mb-6 opacity-80 font-bold max-w-2xl mx-auto">Click the cards to match the "If" clause with the correct future result.</p>
+
+                <div class="space-y-4 max-w-3xl mx-auto w-full text-lg font-bold">
+                    <div class="moana-panel p-4 md:p-6 rounded-xl flex items-center justify-between interactive-card" onclick="this.querySelector('.ans').classList.toggle('hidden')">
+                        <p>1. If Moana finds Maui...</p>
+                        <div class="ans hidden accent-text mt-3">
+                            > ...he will help her.
+                            <div class="follow-up-box mt-3 text-left">
+                                <p class="font-bold text-accent text-[10px] uppercase tracking-widest mb-1">🗣️ Prompt:</p>
+                                <p class="font-medium text-sm text-[var(--text-main)]">If you needed help on a difficult journey, who is the first person you would ask?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moana-panel p-4 md:p-6 rounded-xl flex items-center justify-between interactive-card" onclick="this.querySelector('.ans').classList.toggle('hidden')">
+                        <p>2. If she doesn't cross the reef...</p>
+                        <div class="ans hidden accent-text mt-3">
+                            > ...the island will die.
+                            <div class="follow-up-box mt-3 text-left">
+                                <p class="font-bold text-accent text-[10px] uppercase tracking-widest mb-1">🗣️ Prompt:</p>
+                                <p class="font-medium text-sm text-[var(--text-main)]">If you never leave your comfort zone, what will happen to your personal growth?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="moana-panel p-4 md:p-6 rounded-xl flex items-center justify-between interactive-card" onclick="this.querySelector('.ans').classList.toggle('hidden')">
+                        <p>3. If they restore the heart...</p>
+                        <div class="ans hidden accent-text mt-3">
+                            > ...Te Fiti will heal the ocean.
+                            <div class="follow-up-box mt-3 text-left">
+                                <p class="font-bold text-accent text-[10px] uppercase tracking-widest mb-1">🗣️ Prompt:</p>
+                                <p class="font-medium text-sm text-[var(--text-main)]">If humanity works together, do you think we will heal the environment?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 19: CONDITIONAL SPEAKING GAME -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Applied Grammar</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 text-center font-black">Ocean Scenarios</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl mx-auto w-full text-center">
+                    <p class="text-xl font-bold mb-6 opacity-90 max-w-xl mx-auto">
+                        Complete the First Conditional sentences creatively based on the dangers of the ocean.
+                    </p>
+                    
+                    <div class="space-y-6 text-left max-w-xl mx-auto">
+                        <div class="speaking-starter m-0 mt-3">
+                            <p class="font-bold text-accent font-tribal text-lg mb-1 tracking-widest">🗣️ Scenario 1:</p>
+                            <p class="italic text-lg font-medium">"If a storm hits our boat, I will [ hide / steer / panic ]!"</p>
+                        </div>
+                        <div class="speaking-starter m-0 mt-3 border-l-4 border-green-400">
+                            <p class="font-bold text-green-400 font-tribal text-lg mb-1 tracking-widest">🗣️ Scenario 2:</p>
+                            <p class="italic text-lg font-medium">"If we find the Lava Demon, we will..."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 20: THE HEART OF TE FITI -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs text-[var(--accent)] text-center">Interactive Relic</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 text-center font-black text-white">Heart of Te Fiti</h1>
+                
+                <div class="w-full max-w-3xl mx-auto flex flex-col items-center justify-center">
+                    <div class="te-fiti-stone mb-10" onclick="revealHeartSecret()"></div>
+                    
+                    <div id="heart-secret" class="hidden moana-panel p-6 text-center border-t-4 border-emerald-400 w-full">
+                        <h3 class="font-tribal text-2xl font-black text-emerald-400 mb-3">Destiny & Sacrifice</h3>
+                        <p class="text-lg leading-relaxed font-bold">
+                            The heart is a symbol of creation. To restore it, one must be willing to sacrifice their own safety for the greater good of the world.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- ACT V: ROLEPLAY & CONCLUSION               -->
+        <!-- ========================================== -->
+
+        <!-- PAGE 21: CASTING CALL (ROLEPLAY) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Interactive Speaking</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 text-center font-black">Casting Call</h1>
+                
+                <div class="flex flex-col md:flex-row gap-4 w-full max-w-4xl mx-auto min-h-[40vh]">
+                    <!-- Teacher (Ocean) -->
+                    <div class="flex-1 moana-panel p-6 flex flex-col justify-center text-center border-t-4 border-blue-400">
+                        <h3 class="text-xl font-black mb-1 uppercase text-blue-400 font-tribal">Teacher</h3>
+                        <p class="text-xs opacity-60 tracking-widest mb-6 font-bold">Plays: The Ancestors</p>
+                        <p class="text-xl italic mb-4 font-bold">"Moana... it is time."</p>
+                        <p class="text-xl italic font-bold">"If you don't go, the darkness will consume everything."</p>
+                    </div>
+                    
+                    <!-- Student (Moana) -->
+                    <div class="flex-1 moana-panel p-6 flex flex-col justify-center text-center border-t-4 border-emerald-400 bg-emerald-900/10">
+                        <h3 class="text-xl font-black mb-1 uppercase text-emerald-400 font-tribal">Student</h3>
+                        <p class="text-xs opacity-60 tracking-widest mb-6 font-bold">Plays: Moana</p>
+                        <p class="text-xl italic mb-4 font-bold">"I am Moana of Motunui!"</p>
+                        <p class="text-xl italic font-bold">"I will cross the reef and I will restore the heart!"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 22: ADVANCED SPEAKING (METAPHORS) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Deep Discussion</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 text-center font-black">Wayfinding in Life</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl mx-auto w-full text-center">
+                    <span class="text-5xl mb-4 block">🧭 🌌</span>
+                    <p class="text-xl font-bold mb-6 leading-relaxed opacity-90 italic">
+                        "Wayfinders navigate the ocean by reading the stars and the currents. Sometimes in life, we don't have a map. We just have to trust our instincts."
+                    </p>
+                    
+                    <div class="speaking-starter mx-auto max-w-xl text-left">
+                        <p class="font-bold text-accent font-tribal text-lg mb-1 tracking-widest">🗣️ Wayfinder Starter:</p>
+                        <p class="italic text-lg font-medium">"When I feel lost in life, I usually look for guidance from..."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 23: DISCUSSION (CALLING) -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Open Debate</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 text-center font-black">Personal Calling</h1>
+                
+                <div class="moana-panel p-6 md:p-8 max-w-3xl mx-auto w-full text-center">
+                    <span class="text-5xl mb-4 block">🌟</span>
+                    <p class="text-xl font-bold leading-relaxed mb-6 opacity-90">
+                        "Do you have a 'calling' in life? Something you feel you MUST do, like a passion, a career, or helping someone?"
+                    </p>
+                    
+                    <div class="speaking-starter mx-auto max-w-xl text-left">
+                        <p class="font-bold text-accent font-tribal text-lg mb-1 tracking-widest">🗣️ Wayfinder Starter:</p>
+                        <p class="italic text-lg font-medium">"I believe my true calling is... because it makes me feel..."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 24: CONNECTED SPEECH -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Listening Module</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 text-center font-black">Connected Speech</h1>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto w-full items-center">
+                    <div class="moana-panel p-6 text-center h-full flex flex-col justify-center">
+                        <span class="text-xs font-bold uppercase tracking-widest opacity-50 mb-3 block">Formal Written English</span>
+                        <p class="text-2xl font-bold mb-3">"I am Moana."</p>
+                        <p class="text-2xl font-bold">"I am going to save my people."</p>
+                    </div>
+                    <div class="moana-panel p-6 text-center border-l-4 border-accent h-full flex flex-col justify-center bg-black/10">
+                        <span class="text-xs font-bold uppercase tracking-widest opacity-50 mb-3 block">Fast Spoken English</span>
+                        <p class="text-3xl font-black font-tribal accent-text mb-3">"I'm Moana."</p>
+                        <p class="text-3xl font-black font-tribal accent-text">"I'm gonna save my people."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 25: HOMEWORK DIRECTIVE -->
+        <section class="slide">
+            <div class="page-content">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text text-center">Post-Class Assignment</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-8 text-center font-black">The Wayfinder Log</h1>
+                
+                <div class="moana-panel p-8 max-w-2xl mx-auto w-full relative transform -rotate-1 border-2 border-dashed border-[var(--border-color)]">
+                    <h3 class="text-2xl font-black mb-4 uppercase border-b-2 border-current pb-2 font-tribal tracking-widest">Assignment Brief:</h3>
+                    <p class="text-lg leading-relaxed font-bold mb-4">
+                        "Imagine you are a Wayfinder preparing to cross the reef."
+                    </p>
+                    <ul class="list-disc pl-6 text-base font-bold space-y-3 mb-6 opacity-90 text-left">
+                        <li>Write 5 <strong class="accent-text">"If" sentences (First Conditional)</strong> about your next adventure.</li>
+                        <li>Ex: "If I see a storm, I will change direction."</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 26: APPRAISAL & END -->
+        <section class="slide">
+            <div class="page-content items-center text-center">
+                <h2 class="font-base font-bold tracking-widest mb-2 uppercase text-xs accent-text">Mission Accomplished</h2>
+                <h1 class="text-3xl md:text-5xl font-tribal uppercase mb-6 font-black">Journey's End</h1>
+                
+                <div class="space-y-3 max-w-xl w-full text-lg font-bold text-left mb-10">
+                    <label class="flex items-center gap-4 p-4 moana-panel rounded-xl cursor-pointer">
+                        <input type="checkbox" class="w-6 h-6 accent-accent">
+                        <span class="mt-1 opacity-90">Nautical vocabulary mapped.</span>
+                    </label>
+                    <label class="flex items-center gap-4 p-4 moana-panel rounded-xl cursor-pointer">
+                        <input type="checkbox" class="w-6 h-6 accent-accent">
+                        <span class="mt-1 opacity-90">Gerunds as subjects discussed.</span>
+                    </label>
+                    <label class="flex items-center gap-4 p-4 moana-panel rounded-xl cursor-pointer">
+                        <input type="checkbox" class="w-6 h-6 accent-accent">
+                        <span class="mt-1 opacity-90">First Conditional mastered.</span>
+                    </label>
+                </div>
+
+                <div class="border-t-2 border-current pt-8 w-full flex flex-col items-center">
+                    <p class="mb-6 text-xl font-bold max-w-xl mx-auto">Rate this trailer:</p>
+                    <div class="flex justify-center gap-3 md:gap-6 mb-8">
+                        <button onclick="rate(1)" class="shell-rating text-5xl md:text-6xl grayscale opacity-30 hover:scale-110 transition-transform filter drop-shadow-md">🐚</button>
+                        <button onclick="rate(2)" class="shell-rating text-5xl md:text-6xl grayscale opacity-30 hover:scale-110 transition-transform filter drop-shadow-md">🐚</button>
+                        <button onclick="rate(3)" class="shell-rating text-5xl md:text-6xl grayscale opacity-30 hover:scale-110 transition-transform filter drop-shadow-md">🐚</button>
+                        <button onclick="rate(4)" class="shell-rating text-5xl md:text-6xl grayscale opacity-30 hover:scale-110 transition-transform filter drop-shadow-md">🐚</button>
+                        <button onclick="rate(5)" class="shell-rating text-5xl md:text-6xl grayscale opacity-30 hover:scale-110 transition-transform filter drop-shadow-md">🐚</button>
+                    </div>
+                    <div id="rat-hub" class="hidden p-4 moana-panel rounded-lg font-bold text-lg text-center uppercase tracking-widest accent-text w-max mx-auto font-tribal">> RATED <span id="star-c" class="text-white mx-2 font-black text-2xl"></span> SHELLS.</div>
+                    
+                    <button onclick="window.location.reload();" class="mt-8 moana-btn px-8 py-3 text-base shadow-md border-2 border-transparent">
+                        Return to Motunui
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BOTTOM BAR (Pagination) -->
+    <footer class="fixed bottom-0 left-0 w-full h-16 moana-panel rounded-none border-t border-b-0 border-l-0 border-r-0 border-[var(--border-color)] z-40 flex items-center justify-between px-4 md:px-8 transition-colors duration-1000" style="cursor: default;">
+        <div class="hidden md:flex flex-1 items-center gap-2">
+            <span class="font-black text-lg tracking-[0.1em] uppercase accent-text font-tribal">WOLFLIX</span>
+            <span class="text-xs uppercase tracking-widest border-l-2 border-[var(--border-color)] pl-2 opacity-70 font-bold">Masterclass</span>
+        </div>
+
+        <div class="flex items-center justify-center flex-1 gap-4 md:gap-6">
+            <button onclick="prevSlide()" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border-2 border-[var(--border-color)] rounded-full hover:bg-[var(--accent)] hover:text-[var(--btn-text)] transition-colors bg-[var(--bg-top)]/20" title="Previous Phase">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="w-24 md:w-32 bg-black/20 h-2 rounded-full overflow-hidden border border-[var(--border-color)]">
+                <div id="lcd-prog" class="h-full bg-[var(--accent)] w-0 transition-all duration-300 shadow-[0_0_10px_var(--accent)]"></div>
+            </div>
+            <button onclick="nextSlide()" class="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border-2 border-[var(--border-color)] rounded-full hover:bg-[var(--accent)] hover:text-[var(--btn-text)] transition-colors bg-[var(--bg-top)]/20" title="Next Phase">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+
+        <div class="flex-1 text-right font-tribal font-black tracking-widest uppercase text-base md:text-lg">
+            Page <span id="page-num" class="accent-text ml-1">01</span> <span class="opacity-50 text-xs font-base">/ 26</span>
+        </div>
+    </footer>
+
+    <!-- SLIDE-OUT NOTEPAD -->
+    <aside id="notepad-panel" class="fixed top-16 right-0 w-full max-w-md h-[calc(100vh-8rem)] bg-[var(--bg-top)] border-l-4 border-[var(--border-color)] z-50 translate-x-full flex flex-col shadow-[-10px_0px_50px_rgba(0,0,0,0.5)] transition-transform duration-500 text-[var(--text-main)]">
+        <div class="p-4 border-b-2 border-[var(--border-color)] bg-[var(--panel-bg)] flex justify-between items-center">
+            <h2 class="font-tribal font-black uppercase tracking-widest text-base flex items-center gap-2 accent-text">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                Teacher's Notes
+            </h2>
+            <button onclick="toggleNotepad()" class="text-muted hover:text-accent font-black text-xl px-2">✕</button>
+        </div>
+        <textarea class="flex-1 w-full bg-transparent p-6 font-base font-bold text-lg leading-relaxed outline-none resize-none placeholder:opacity-50" placeholder="Type your class notes or student feedback here..."></textarea>
+    </aside>
+
+    <!-- JS LOGIC -->
+    <script>
+        // --- 1. Pagination Logic ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function updateUI() {
+            document.getElementById('page-num').innerText = (currentSlide + 1).toString().padStart(2, '0');
+            
+            const prog = document.getElementById('lcd-prog');
+            if(totalSlides > 1) prog.style.width = `${(currentSlide / (totalSlides - 1)) * 100}%`;
+            
+            // Hard fallback: Ativa Ocean Mode a partir da página 12 (índice 11 - Screening Prep) caso falhe a transição na Onda
+            if (currentSlide >= 12 && !document.body.classList.contains('theme-ocean')) {
+                document.body.classList.add('theme-ocean');
+            } else if (currentSlide < 11 && document.body.classList.contains('theme-ocean')) {
+                document.body.classList.remove('theme-ocean');
+                const waveBtn = document.getElementById('wave-btn');
+                if(waveBtn) waveBtn.disabled = false;
+            }
+        }
+
+        function goToSlide(i) {
+            if (i < 0 || i >= totalSlides) return;
+            slides.forEach(s => s.classList.remove('active'));
+            currentSlide = i;
+            slides[currentSlide].classList.add('active');
+            updateUI();
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'ArrowRight') nextSlide();
+            if(e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // --- 2. Fullscreen & Notepad ---
+        function toggleFullscreen() {
+            const doc = window.document;
+            const docEl = doc.documentElement;
+            const req = docEl.requestFullscreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            const exit = doc.exitFullscreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+            try {
+                if (!doc.fullscreenElement) {
+                    const promise = req ? req.call(docEl) : null;
+                    if (promise && promise.catch) promise.catch(err => console.warn(err));
+                } else {
+                    const promise = exit ? exit.call(doc) : null;
+                    if (promise && promise.catch) promise.catch(err => console.warn(err));
+                }
+            } catch (err) { console.warn(err); }
+        }
+
+        function toggleNotepad() {
+            document.getElementById('notepad-panel').classList.toggle('translate-x-full');
+        }
+
+        // --- 3. Praise System ---
+        function triggerPraise(textHTML) {
+            const popup = document.getElementById('praise-popup');
+            const textContainer = document.getElementById('praise-text');
+            
+            textContainer.innerHTML = textHTML;
+            popup.classList.remove('hidden');
+            popup.classList.add('praise-anim');
+            
+            setTimeout(() => {
+                popup.classList.remove('praise-anim');
+                popup.classList.add('hidden');
+            }, 2000);
+        }
+
+        // --- 4. THE OCEAN WAVE EVENT (Transition) ---
+        function triggerWaveEvent() {
+            const btn = document.getElementById('wave-btn');
+            btn.disabled = true;
+            
+            const wave = document.getElementById('ocean-wave');
+            wave.classList.add('wave-crash');
+            
+            // Troca o tema visual enquanto a onda cobre a tela
+            setTimeout(() => {
+                document.body.classList.remove('theme-island');
+                document.body.classList.add('theme-ocean');
+            }, 800);
+
+            // Avança slide automaticamente e baixa a onda
+            setTimeout(() => {
+                nextSlide(); 
+                wave.classList.remove('wave-crash');
+            }, 1500);
+        }
+
+        // --- 5. Reveal Te Fiti Secret ---
+        function revealHeartSecret() {
+            const secret = document.getElementById('heart-secret');
+            secret.classList.remove('hidden');
+            secret.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            triggerPraise('THE HEART IS RESTORED! 💚');
+        }
+
+        // --- 6. Rating (Shells) ---
+        function rate(n) {
+            const drops = document.querySelectorAll('.shell-rating');
+            drops.forEach((d, i) => {
+                d.classList.toggle('grayscale', i >= n);
+                d.classList.toggle('opacity-30', i >= n);
+            });
+            document.getElementById('rat-hub').classList.remove('hidden');
+            document.getElementById('star-c').innerText = n;
+        }
+
+        // Initialize
+        updateUI();
+    </script>
+</body>
+</html>
